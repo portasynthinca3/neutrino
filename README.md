@@ -2,10 +2,10 @@
 Neutrino is an operating system for ESP32 that aims to provide preemptive multitasking and leverage its MMU, MPU and PID peripherals
 
 # building
-`./ntool.py build` - build only
-`./ntool.py upload` - upload the built image
-`./ntool.py monitor` - open a serial monitor
-`./ntool.py dump` - invoke objdump on the built image
+`./ntool.py build` - build only\
+`./ntool.py upload` - upload the built image\
+`./ntool.py monitor` - open a serial monitor\
+`./ntool.py dump` - invoke objdump on the built image\
 `./ntool.py bum` - build, upload and monitor
 
 # config
