@@ -14,7 +14,7 @@ Neutrino is an operating system for ESP32 that aims to provide preemptive multit
 {
     "toolchain_path": "/path/to/your/esp32/toolchain",
     "toolchain_prefix": "xtensa-esp32-elf-",
-    "verbose": true, /* false will prevent ntool from logging every command it's executing*/
+    "verbose": true, /* false will prevent ntool from logging every command it's executing */
     "src": "./src",
     "gcc_flags": "-O2 -Wall",
 

@@ -47,10 +47,9 @@ def build():
     # get the object files and link them
     o_files = get_files('.build', 'o')
     print(f'{colorama.Fore.GREEN}  => Linking')
-    execute(f'{tc}ld -nostdlib -e neutrino_main -o .build/neutrino.elf {" ".join(o_files)}')
+    execute(f'{tc}ld -T link.ld -nostdlib -e neutrino_main -o .build/neutrino.elf {" ".join(o_files)}')
     # convert the ELF file into an ESP image
-    esptool('elf2image .build/neutrino.elf')
-    esptool('image_info .build/neutrino.bin')
+    esptool('elf2image --flash_mode dio --flash_freq 80m .build/neutrino.elf')
 
 def dump():
     print(f'{colorama.Fore.MAGENTA}==== DUMP')
@@ -58,7 +57,8 @@ def dump():
 
 def upload():
     print(f'{colorama.Fore.MAGENTA}==== UPLOAD')
-    esptool('write_flash 0x10000 .build/neutrino.bin')
+    esptool('write_flash 0x1000 .build/neutrino.bin')
+    esptool('verify_flash 0x1000 .build/neutrino.bin')
 
 def monitor():
     print(f'{colorama.Fore.MAGENTA}==== MONITOR')
