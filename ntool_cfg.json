@@ -1,0 +1,12 @@
+{
+    "toolchain_path": "~/.platformio/packages/toolchain-xtensa32",
+    "toolchain_prefix": "xtensa-esp32-elf-",
+    "verbose": true,
+    "src": "./src",
+    "gcc_flags": "-O2 -Wall",
+
+    "esptool": "python3 -m esptool",
+    "upload_rate": "2000000",
+    "monitor_port": "/dev/ttyUSB0",
+    "monitor_rate": "115200"
+}
