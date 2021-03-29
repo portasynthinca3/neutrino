@@ -64,11 +64,14 @@ def monitor():
     print(f'{colorama.Fore.MAGENTA}==== MONITOR')
     execute(f'python3 -m serial.tools.miniterm {CONFIG["monitor_port"]} {CONFIG["monitor_rate"]}')
 
+def addr2line(a):
+    execute(f'{toolchain()}addr2line --exe=.build/neutrino.elf -p {a}')
+
 
 
 def main():
     if len(sys.argv) < 2:
-        print(f'Usage: {sys.argv[0]} ' + '{build,upload,monitor,dump,bum]')
+        print(f'Usage: {sys.argv[0]} ' + '{build,upload,monitor,dump,bum,a2l} [...]')
         exit()
     command = sys.argv[1]
     
@@ -79,6 +82,7 @@ def main():
     elif command == 'upload':  upload()
     elif command == 'monitor': monitor()
     elif command == 'bum': build(); upload(); monitor()
+    elif command == 'a2l': addr2line(sys.argv[2])
     else: print(f'Unknown command {command}')
 
 if __name__ == '__main__': main()
