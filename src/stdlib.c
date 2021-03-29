@@ -1,14 +1,6 @@
 #include "stdlib.h"
 #include "hal/uart.h"
 
-void write_reg(uint32_t addr, uint32_t val) {
-    *(volatile unsigned int* const)addr = val;
-}
-
-uint32_t read_reg(uint32_t addr) {
-    return *(volatile unsigned int* const)addr;
-}
-
 /*
  * Returns the number of arguments sprintf will require on a string fmt
  */
@@ -173,7 +165,7 @@ int sprintf(char* str, const char* format, ...) {
  * Print string to UART
  */
 int puts(const char* str) {
-    uart_send_str(0, str);
+    uart_send_str(0, (char*)str);
     uart_send_char(0, '\n');
     return 0;
 }

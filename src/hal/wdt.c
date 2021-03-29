@@ -2,11 +2,11 @@
 #include "../stdlib.h"
 
 void rtc_wdt_feed(void) {
-    write_reg(RTC_CNTL_WDTFEED_REG, 1U << 31);
+    RTC_CNTL_WDTFEED_REG = 1U << 31;
 }
 
 void timg_wdt_feed(uint8_t n) {
-    write_reg(TIMGn_Tx_WDTFEED_REG(n), 0xDEADBEEF);
+    TIMGn_Tx_WDTFEED_REG(n) = 0xDEADBEEF;
 }
 
 void wdt_feed(void) {
@@ -18,15 +18,15 @@ void wdt_feed(void) {
 
 
 void rtc_wdt_disable(void) {
-    write_reg(RTC_CNTL_WDTCONFIGx_REG(0), read_reg(RTC_CNTL_WDTCONFIGx_REG(0)) & ~(1U << 31));
+    SET_AT(RTC_CNTL_WDTCONFIGx_REG(0), 31, 1, 0);
     for(int i = 1; i <= 4; i++)
-        write_reg(RTC_CNTL_WDTCONFIGx_REG(i), 0xFFFFFFFF);
+        RTC_CNTL_WDTCONFIGx_REG(i) = 0xFFFFFFFF;
 }
 
 void timg_wdt_disable(uint8_t n) {
-    write_reg(TIMGn_Tx_WDTCONFIGz_REG(n, 1), 0xFFFF << 16);
+    TIMGn_Tx_WDTCONFIGz_REG(n, 1) = 0xFFFFU << 16;
     for(int i = 2; i <= 5; i++)
-        write_reg(TIMGn_Tx_WDTCONFIGz_REG(n, i), 0xFFFFFFFF);
+        TIMGn_Tx_WDTCONFIGz_REG(n, i) = 0xFFFFFFFF;
 }
 
 void wdt_disable(void) {

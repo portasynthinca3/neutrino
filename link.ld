@@ -11,12 +11,12 @@ SECTIONS
         *(.rodata)
     } > DRAM,
 
-    .literal : 
+    .literal :
     {
         *(.literal)
     } > IRAM,
-    
-    .text : 
+
+    .text :
     {
         *(.text)
     } > IRAM

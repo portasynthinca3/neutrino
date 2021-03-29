@@ -14,8 +14,8 @@ typedef signed   long  int64_t;
 typedef uint32_t size_t;
 
 // ESP32 register operations
-void     write_reg(uint32_t addr, uint32_t val);
-uint32_t read_reg (uint32_t addr);
+#define REG(addr) *(uint32_t*)(addr)
+#define SET_AT(reg, off, mask, val) (reg) = ((reg) & ~((uint32_t)mask << off)) | ((uint32_t)val << off)
 
 // Memory operations
 void* memset (void* dst, int ch, size_t size);
