@@ -2,7 +2,7 @@
 #include "../stdlib.h"
 
 void rtc_wdt_feed(void) {
-    write_reg(RTC_CNTL_WDTFEED_REG, 1 << 31);
+    write_reg(RTC_CNTL_WDTFEED_REG, 1U << 31);
 }
 
 void timg_wdt_feed(uint8_t n) {
@@ -18,6 +18,7 @@ void wdt_feed(void) {
 
 
 void rtc_wdt_disable(void) {
+    write_reg(RTC_CNTL_WDTCONFIGx_REG(0), read_reg(RTC_CNTL_WDTCONFIGx_REG(0)) & ~(1U << 31));
     for(int i = 1; i <= 4; i++)
         write_reg(RTC_CNTL_WDTCONFIGx_REG(i), 0xFFFFFFFF);
 }
@@ -31,5 +32,5 @@ void timg_wdt_disable(uint8_t n) {
 void wdt_disable(void) {
     rtc_wdt_disable();
     timg_wdt_disable(0);
-    timg_wdt_disable(0);
+    timg_wdt_disable(1);
 }
