@@ -25,7 +25,7 @@ void uart_clk(uint8_t n, uint32_t baud) {
 
 void uart_send_char(uint8_t n, char c) {
     // wait for the buffer to contain < 32 chars
-    while((UARTn_STATUS_REG(n) >> 16) & 0xFF >= 32);
+    while(((UARTn_STATUS_REG(n) >> 16) & 0xFF) >= 32);
     UARTn_FIFO_REG(n) = (uint32_t)c;
 }
 

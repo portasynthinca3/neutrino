@@ -57,7 +57,7 @@ const char hex_const[16] = "0123456789ABCDEF";
 char* sprintub16(char* str, uint32_t i, uint8_t min) {
     // create some variables
     uint8_t pos = 0;
-    uint64_t div = 1ULL << 28; // start with the leftmost digit
+    uint32_t div = 1U << 28; // start with the leftmost digit
     uint8_t started = 0;
     for(uint8_t j = 1; j <= 8; j++) {
         // fetch the next digit
@@ -122,18 +122,18 @@ int _sprintf(char* str, const char* format, va_list valist) {
                 case 'd': // integer
                 case 'u':
                 case 'i': {
-                    char buf[64];
-                    sprintu(buf, va_arg(valist, uint64_t), 1);
-                    for(uint64_t j = 0; j < strlen(buf); j++)
+                    char buf[16];
+                    sprintu(buf, va_arg(valist, uint32_t), 1);
+                    for(uint32_t j = 0; j < strlen(buf); j++)
                         str[str_idx++] = buf[j];
                     break;
                 }
                 case 'p': // hex integer
                 case 'x':
                 case 'X': {
-                    char buf[64];
-                    sprintub16(buf, va_arg(valist, uint64_t), 1);
-                    for(uint64_t j = 0; j < strlen(buf); j++)
+                    char buf[9];
+                    sprintub16(buf, va_arg(valist, uint32_t), 1);
+                    for(uint32_t j = 0; j < strlen(buf); j++)
                         str[str_idx++] = buf[j];
                     break;
                 }

@@ -2,6 +2,12 @@
 
 #include "../stdlib.h"
 
+// milliamps
+#define GPIO_DRIVE_40 3
+#define GPIO_DRIVE_20 2
+#define GPIO_DRIVE_10 1
+#define GPIO_DRIVE_5  0
+
 #define GPIO_OUT_W1TS_REG(bank)    REG(bank ? 0x3FF44014 : 0x3FF44008)
 #define GPIO_OUT_W1TC_REG(bank)    REG(bank ? 0x3FF44018 : 0x3FF4400C)
 #define GPIO_ENABLE_W1TS_REG(bank) REG(bank ? 0x3FF44030 : 0x3FF44024)
