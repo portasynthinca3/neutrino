@@ -20,12 +20,21 @@ void krnl_log(const char* format, ...) {
 }
 
 void neutrino_main(void) {
+    uart_txfifo_flush(0);
+    cpu_set_clk(CPU_CLK_240);
+    cpu_set_voltage(CPU_VOLT_900); // seems to be working at 0.9V just fine...
+    uart_clk(0, 115200);
+    printf("\n\n");
+
     krnl_log("neutrino v%s compiled on %s %s", VERSION, __DATE__, __TIME__);
 
     krnl_log("disabling wdt");
     wdt_disable();
 
     krnl_log("boot done. Nice to meet you!");
+
+    gpio_simple_out(5, 1);
+    gpio_set_out(5, 0);
 
     while(1);
 }

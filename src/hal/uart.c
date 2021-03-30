@@ -11,8 +11,12 @@ void uart_txfifo_rst(uint8_t n) {
     SET_AT(UARTn_CONF0_REG(n), 18, 1, 1);
 }
 
+void uart_txfifo_flush(uint8_t n) {
+    while((UARTn_STATUS_REG(n) >> 16) & 0xFF);
+}
+
 void uart_clk(uint8_t n, uint32_t baud) {
-    uint64_t div = (40000000UL << 4) / baud;
+    uint64_t div = (54000000UL << 4) / baud;
     uint32_t dec = div >> 4;
     uint32_t frag = div & 0xF;
     SET_AT(UARTn_CLKDIV_REG(n), 0, 0xFFFFF, dec);
@@ -20,8 +24,8 @@ void uart_clk(uint8_t n, uint32_t baud) {
 }
 
 void uart_send_char(uint8_t n, char c) {
-    // wait for the buffer to contain < 16 chars
-    while((UARTn_STATUS_REG(n) >> 16) & 0xFF);
+    // wait for the buffer to contain < 32 chars
+    while((UARTn_STATUS_REG(n) >> 16) & 0xFF >= 32);
     UARTn_FIFO_REG(n) = (uint32_t)c;
 }
 

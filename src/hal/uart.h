@@ -30,9 +30,10 @@
 #define UARTn_INT_ENA_REG(n)        REG(UARTn_BASE(n) + 0x0C)
 #define UARTn_INT_CLR_REG(n)        REG(UARTn_BASE(n) + 0x10)
 
-void uart_config    (uint8_t n, uint8_t stop_len, uint8_t bits);
-void uart_clk       (uint8_t n, uint32_t bauds);
-void uart_txfifo_rst(uint8_t n);
+void uart_config       (uint8_t n, uint8_t stop_len, uint8_t bits);
+void uart_clk          (uint8_t n, uint32_t bauds);
+void uart_txfifo_rst   (uint8_t n);
+void uart_txfifo_flush (uint8_t n);
 
-void uart_send_char(uint8_t n, char c);
-void uart_send_str (uint8_t n, char* str);
+void uart_send_char (uint8_t n, char c);
+void uart_send_str  (uint8_t n, char* str);

@@ -2,10 +2,11 @@
 #include "../stdlib.h"
 
 void gpio_simple_out(uint8_t pad, uint32_t drive) {
+    uint8_t gpio = pad;
     uint8_t bank = pad >= 32;
     if(bank) pad -= 32;
     SET_AT(GPIO_ENABLE_W1TS_REG(bank), pad, 1, 1);
-    IO_MUX_GPIO5_REG = (2 << 12) | (drive << 10) | (1 << 9); // ikr
+    IO_MUX_GPIOx_REG(gpio) = (2 << 12) | (drive << 10) | (1 << 9);
 }
 
 void gpio_set_out(uint8_t pad, uint8_t val) {
