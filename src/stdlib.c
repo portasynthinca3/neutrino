@@ -187,7 +187,11 @@ int printf(const char* format, ...) {
  * Copy a block of memory
  */
 void* memcpy(void* destination, const void* source, size_t num) {
-    for(int i = 0; i < num; i++)
+    // transfer most of the data word-wise
+    for(int i = 0; i < num / 4; i++)
+        ((uint32_t*)destination)[i] = ((uint32_t*)source)[i];
+    // transfer the rest byte-wise
+    for(int i = 0; i < num % 4; i++)
         ((uint8_t*)destination)[i] = ((uint8_t*)source)[i];
     return destination;
 }

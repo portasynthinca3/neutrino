@@ -6,14 +6,15 @@
 #include "hal/gpio.h"
 #include "hal/cpu.h"
 #include "hal/tim.h"
+#include "hal/sched.h"
 
-void krnl_log(const char* format, ...) {
+void krnl_log(const char* component, const char* format, ...) {
     va_list valist;
     va_start(valist, _sprintf_argcnt((char*)format));
     char buf[512];
     _sprintf(buf, format, valist);
 
-    printf("[LOG] ");
+    printf("[LOG][%s]\t", component);
     uart_send_str(0, buf);
     puts("");
 
@@ -27,24 +28,12 @@ void neutrino_main(void) {
     uart_clk(0, 115200);
     printf("\n\n");
 
-    krnl_log("neutrino v%s compiled on %s %s", VERSION, __DATE__, __TIME__);
+    krnl_log("K-MAIN", "neutrino v%s compiled on %s %s", VERSION, __DATE__, __TIME__);
 
-    krnl_log("disabling wdt");
     wdt_disable();
+    sched_init(5000);
 
-    krnl_log("configuring timers");
-
-    krnl_log("boot done. Nice to meet you!");
-
-    tim_reload_set(0, 0, 1000);
-    tim_write(0, 0, 1000);
-    tim_alarm_set(0, 0, 0);
-    tim_alarm_en(0, 0, 1);
-    tim_config(0, 0, 1, 0, 1, 6750);
-    while(1) {
-        uint32_t val = tim_read(0, 0);
-        krnl_log("%d", val);
-    }
+    krnl_log("K-MAIN", "boot done. Nice to meet you!");
 
     while(1);
 }
